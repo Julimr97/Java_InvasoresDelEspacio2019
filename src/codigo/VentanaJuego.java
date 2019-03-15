@@ -26,6 +26,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     BufferedImage buffer = null;
     
     nave minave = new nave();
+    disparo midisparo = new disparo ();
+    Marciano miMarciano = new Marciano ();
     
     Timer temporizador = new Timer(10, new ActionListener() {
         @Override
@@ -43,6 +45,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         setSize (ANCHOPANTALLA, ALTOPANTALLA);
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         buffer.createGraphics();
+        
         temporizador.start();
         
         minave.x = ANCHOPANTALLA /2 - minave.imagen.getWidth(this) / 2;
@@ -63,8 +66,13 @@ public class VentanaJuego extends javax.swing.JFrame {
         // redibujaremos aqui cada elemento 
         
         g2.drawImage(minave.imagen, minave.x, minave.y, null );
-        
+        g2.drawImage(midisparo.imagen, midisparo.x, midisparo.y, null );
+        g2.drawImage(miMarciano.imagen1, miMarciano.x, miMarciano.y, null );
+
+
         minave.mueve();
+        midisparo.mueve();
+        miMarciano.mueve();
         
         
         ///////////////////////////////////////////////////////
@@ -89,6 +97,14 @@ public class VentanaJuego extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
+            }
+        });
 
         jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -124,11 +140,24 @@ public class VentanaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
-        switch(evt.getKeyCode()){
-            case KeyEvent.VK_LEFT: minave.pulsadoIzquierda = true; break;
-            case KeyEvent.VK_RIGHT: minave.pulsadoDerecha = true; break;
-        }
+
     }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+    switch(evt.getKeyCode()){ 
+            case KeyEvent.VK_LEFT: minave.setPulsadoIzquierda(false); break;
+            case KeyEvent.VK_RIGHT: minave.setPulsadoDerecha(false); break;
+    }
+    }//GEN-LAST:event_formKeyReleased
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_LEFT: minave.setPulsadoIzquierda(true); break;
+            case KeyEvent.VK_RIGHT: minave.setPulsadoDerecha(true); break;
+                        case KeyEvent.VK_SPACE: midisparo.posicionaDisparo(minave); break;
+
+        }
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments

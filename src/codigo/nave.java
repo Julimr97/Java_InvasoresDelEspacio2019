@@ -17,12 +17,23 @@ public class nave {
     public Image imagen = null;
     public int x = 0;
     public int y = 0;
+    boolean pulsadoIzquierda = false;
+    boolean pulsadoDerecha = false;
     
     public nave (){
         try {
             imagen = ImageIO.read(getClass().getResource("/imagenes/nave.png"));
         } catch (IOException ex) {
             
-        }
     }
+              }
+        public void mueve (){
+            if (pulsadoIzquierda){
+                x--;
+            }
+            if (pulsadoDerecha){
+                x++;
+            }
+            x=x+1;
+        } 
 }
